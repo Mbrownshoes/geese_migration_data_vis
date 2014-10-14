@@ -5,6 +5,9 @@
 body {
   background: "#fcfcfa";
 }
+.bird {
+  fill: #fff;
+}
 
 .stroke {
   fill: none;
@@ -97,4 +100,27 @@ d3.json("world.json", function(error, world) {
 
 d3.select(self.frameElement).style("height", height + "px");
 
+
+d3.json("build/points.json", function(error, points) {
+	if (error) return console.error(error);
+	
+	svg.append("path")
+		.datum(topojson.feature(points, points.objects.points))
+		.attr("d", path)
+		.attr("class", "bird");
+
+});
+
 </script>	
+
+
+
+
+
+
+
+
+
+
+
+
