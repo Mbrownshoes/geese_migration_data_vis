@@ -3,7 +3,7 @@
 <style>
 
 body {
-  background: #fcfcfa;
+  background: "#fcfcfa";
 }
 
 .stroke {
@@ -13,7 +13,7 @@ body {
 }
 
 .fill {
-  fill: #fff;
+  fill: rgba(70,130,180,.5);
 }
 
 .graticule {
@@ -44,11 +44,11 @@ var width = 960,
 	height = 960;
 
 var projection = d3.geo.orthographic()
-					.scale(475)
+					.scale(650)
 					.translate([width / 2, height / 2])
 					.clipAngle(90)
 					.precision(.1)
-					.rotate([40.7, -76.8])
+					.rotate([50.7, -76.8])
 
 var path = d3.geo.path()
 			.projection(projection)
