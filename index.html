@@ -101,11 +101,11 @@ d3.json("world.json", function(error, world) {
 d3.select(self.frameElement).style("height", height + "px");
 
 
-d3.json("build/points.json", function(error, points) {
+d3.json("build/geese.json", function(error, geese) {
 	if (error) return console.error(error);
 	
 	svg.append("path")
-		.datum(topojson.feature(points, points.objects.points))
+		.datum(topojson.feature(geese, geese.objects.geese))
 		.attr("d", path)
 		.attr("class", "bird");
 
