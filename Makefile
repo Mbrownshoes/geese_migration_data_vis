@@ -6,6 +6,7 @@ build/geese.json: build/geese.csv
 	node_modules/.bin/topojson -o build/geese.json \
 	-x location-long -y location-lat \
 	-p name='individual' \
+	-p datetime='local_timestamp' \
 	-- geese=$<
 
 build/lines.json: build/lines.shp

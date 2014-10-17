@@ -114,7 +114,6 @@ d3.json("build/geese.json", function(error, geese) {
 	if (error) return console.error(error);
 	
 
-	x=geese;
 	allgeese = topojson.feature(geese, geese.objects.geese)
 	feat = allgeese.features;
 
@@ -126,6 +125,7 @@ d3.json("build/geese.json", function(error, geese) {
 					})
 					.entries(feat);
 	console.log(geeseName)
+	x = geeseName;
 	// quake();
 	// svg.append("path")
 	// 	.datum(topojson.feature(geese, geese.objects.geese))
