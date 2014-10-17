@@ -105,11 +105,6 @@ var allgeese;
 var feat;
 
 
-var yields = [{yield: 27.00, variety: "Manchuria", year: 1931, site: "University Farm"},
-              {yield: 48.87, variety: "Manchuria", year: 1931, site: "Waseca"},
-              {yield: 27.43, variety: "Manchuria", year: 1931, site: "Morris"}]
-
-
 d3.json("build/geese.json", function(error, geese) {
 	if (error) return console.error(error);
 	
@@ -124,9 +119,13 @@ d3.json("build/geese.json", function(error, geese) {
 					return feat.properties.name;
 					})
 					.entries(feat);
-	console.log(geeseName)
-	x = geeseName;
-	// quake();
+	
+	for (var j=0; j< 1; j++) {
+		eachBird = geeseName[j];
+		quake();
+		console.log(eachBird)
+	};
+	
 	// svg.append("path")
 	// 	.datum(topojson.feature(geese, geese.objects.geese))
 	// 	.attr("d", path)
@@ -135,28 +134,29 @@ d3.json("build/geese.json", function(error, geese) {
 });
 
 
-
-
-var i = 0;
-
 function quake() {
-	var c = feat[i];
-	svg.append("circle")
-		.attr("cx", projection(c.geometry.coordinates)[0])
-		.attr("cy", projection(c.geometry.coordinates)[1])
-		.attr("r", 1)
-		.style("fill", "red")
-		.style("fill-opacity", 0.5)
-		.style("stroke", "red")
-		.style("stroke-opacity", 0.5)
-	.transition()
-	.duration(2000)
-	.ease(Math.sqrt)
-	.attr("r", 20)
-	.style("fill-opacity", 1e-6)
-	.remove()
-setTimeout(quake, 200);
-i++;
+	console.log('stuff')
+	for (var i=0; i< eachBird.values.length; i++) {
+		var c = eachBird.values[i];
+		svg.append("circle")
+			.attr("cx", projection(c.geometry.coordinates)[0])
+			.attr("cy", projection(c.geometry.coordinates)[1])
+			.style("fill", "red")
+			.style("fill-opacity", 0.5)
+			.style("stroke", "red")
+			.style("stroke-opacity", 0.5)
+		.transition()
+		.delay(1000)
+		.duration(2000)
+		.ease(Math.sqrt)
+		.attr("r", 20)
+		.style("fill-opacity", 1e-6)
+		.remove()
+		console.log(i)
+
+	// setTimeout(quake, 20);
+
+	};
 };
  
     </script>
