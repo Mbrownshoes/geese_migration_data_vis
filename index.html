@@ -5,9 +5,9 @@
 body {
   background: "#fcfcfa";
 }
-.bird {
+/*.bird {
   fill: #fff;
-}
+}*/
 
 .stroke {
   fill: none;
@@ -104,12 +104,29 @@ d3.select(self.frameElement).style("height", height + "px");
 var allgeese;
 var feat;
 
+
+var yields = [{yield: 27.00, variety: "Manchuria", year: 1931, site: "University Farm"},
+              {yield: 48.87, variety: "Manchuria", year: 1931, site: "Waseca"},
+              {yield: 27.43, variety: "Manchuria", year: 1931, site: "Morris"}]
+
+
 d3.json("build/geese.json", function(error, geese) {
 	if (error) return console.error(error);
 	
+
+	x=geese;
 	allgeese = topojson.feature(geese, geese.objects.geese)
 	feat = allgeese.features;
-	quake();
+
+	// console.log(d3.keys(feat[0]))
+
+	var geeseName = d3.nest()
+					.key(function(feat) {
+					return feat.properties.name;
+					})
+					.entries(feat);
+	console.log(geeseName)
+	// quake();
 	// svg.append("path")
 	// 	.datum(topojson.feature(geese, geese.objects.geese))
 	// 	.attr("d", path)
