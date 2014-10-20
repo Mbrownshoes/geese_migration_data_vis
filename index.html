@@ -122,11 +122,10 @@ d3.json("build/geese.json", function(error, geese) {
 	
 	
 
-	for (var j=0; j< 2; j++) {
+	for (var j=0; j< geeseName.length; j++) {
 		eachBird = geeseName[j];
 		loaded_geese.push(eachBird);
-		quake();
-		console.log(j)
+		makeCircles();
 	};
 	
 
@@ -134,26 +133,21 @@ d3.json("build/geese.json", function(error, geese) {
 // first bird 556
 // second bird 567
 
-	// svg.append("path")
-	// 	.datum(topojson.feature(geese, geese.objects.geese))
-	// 	.attr("d", path)
-	// 	.attr("class", "bird");
-	
-// figure out how to work with dates
-// var tt = new Date(z.values[553].properties.datetime)
 
+	// animate each point for each bird
 	svg.selectAll("circle")
 		   .transition()
 		   .delay(function(d, i) {
+		   	console.log(d)
 		   	try {
 		   		if (i == 0)
-		   			t0 = new Date(eachBird.values[i].properties.datetime);
-		   		ts = new Date(eachBird.values[i].properties.datetime);
+		   			startTime = new Date(eachBird.values[i].properties.datetime);
+		   		dateTime = new Date(eachBird.values[i].properties.datetime);
 		   		console.log(i)
 		   		z=eachBird;
-			   return ((ts/60000)-(t0/60000))/4;
+			   return ((dateTime/60000)-(startTime/60000))/4;
 			}catch(e){
-				console.log(e)
+				// console.log(e)
 			}
 		   })
 		   .duration(500)
@@ -169,7 +163,7 @@ d3.json("build/geese.json", function(error, geese) {
 
 
 
-function quake() {
+function makeCircles() {
 	for (var i=0; i< eachBird.values.length; i++) {
 		var c = eachBird.values[i];
 			
