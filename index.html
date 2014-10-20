@@ -103,7 +103,7 @@ d3.select(self.frameElement).style("height", height + "px");
 
 var allgeese;
 var feat;
-
+var loaded_geese=[];
 
 d3.json("build/geese.json", function(error, geese) {
 	if (error) return console.error(error);
@@ -120,12 +120,20 @@ d3.json("build/geese.json", function(error, geese) {
 					})
 					.entries(feat);
 	
-	for (var j=0; j< 1; j++) {
+	
+
+	for (var j=0; j< 2; j++) {
 		eachBird = geeseName[j];
+		loaded_geese.push(eachBird);
 		quake();
-		// console.log(eachBird)
+		console.log(j)
 	};
 	
+
+
+// first bird 556
+// second bird 567
+
 	// svg.append("path")
 	// 	.datum(topojson.feature(geese, geese.objects.geese))
 	// 	.attr("d", path)
@@ -137,12 +145,16 @@ d3.json("build/geese.json", function(error, geese) {
 	svg.selectAll("circle")
 		   .transition()
 		   .delay(function(d, i) {
+		   	try {
 		   		if (i == 0)
 		   			t0 = new Date(eachBird.values[i].properties.datetime);
 		   		ts = new Date(eachBird.values[i].properties.datetime);
-		   		console.log(ts)
+		   		console.log(i)
 		   		z=eachBird;
-			   return ((ts/60000)-(t0/60000))/3;
+			   return ((ts/60000)-(t0/60000))/4;
+			}catch(e){
+				console.log(e)
+			}
 		   })
 		   .duration(500)
 		   .style("fill", "blue")
@@ -154,6 +166,7 @@ d3.json("build/geese.json", function(error, geese) {
 			.style("fill-opacity", 1e-6)
 			.remove()
 });
+
 
 
 function quake() {
