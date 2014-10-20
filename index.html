@@ -123,40 +123,43 @@ d3.json("build/geese.json", function(error, geese) {
 	for (var j=0; j< 1; j++) {
 		eachBird = geeseName[j];
 		quake();
+		// console.log(eachBird)
 	};
 	
 	// svg.append("path")
 	// 	.datum(topojson.feature(geese, geese.objects.geese))
 	// 	.attr("d", path)
 	// 	.attr("class", "bird");
-
+	
+	svg.selectAll("circle")
+		   .transition()
+		   .delay(function(d, i) {
+		   		console.log(i / 2* 100)
+			   return i / 2* 100;
+		   })
+		   .duration(500)
+		   .style("fill", "blue")
+			.style("fill-opacity", 0.5)
+			.style("stroke", "red")
+			.style("stroke-opacity", 0.5)
+			.attr("r", 20)
+			.ease(Math.sqrt)
+			.style("fill-opacity", 1e-6)
+			.remove()
 });
 
 
 function quake() {
 	for (var i=0; i< eachBird.values.length; i++) {
+		var c = eachBird.values[i];
 			
-		// setTimeout(function() {
-			// debugger;	
 			svg.append("circle")
-				.attr("cx", projection(eachBird.values[i].geometry.coordinates)[0])
-				.attr("cy", projection(eachBird.values[i].geometry.coordinates)[1])
-				.style("fill", "red")
-				.style("fill-opacity", 0.5)
-				.style("stroke", "red")
-				.style("stroke-opacity", 0.5)
-			.transition()
-			.delay(function(d, i) { return i * 1000 })
-			.duration(2000)
-			.ease(Math.sqrt)
-			.attr("r", 20)
-			.style("fill-opacity", 1e-6)
-			.remove()
+			.attr("cx", projection(c.geometry.coordinates)[0])
+			.attr("cy", projection(c.geometry.coordinates)[1])
 			
-		// }, 2000);
 	};
 };
- 
+
     </script>
   </body>
 </html>
