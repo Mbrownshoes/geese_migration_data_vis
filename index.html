@@ -97,7 +97,7 @@ var svg = d3.select("body")
 				.attr("class", "boundary")
 				.attr("d", path);
 
-});
+	});
 
 d3.select(self.frameElement).style("height", height + "px");
 
@@ -131,11 +131,18 @@ d3.json("build/geese.json", function(error, geese) {
 	// 	.attr("d", path)
 	// 	.attr("class", "bird");
 	
+// figure out how to work with dates
+// var tt = new Date(z.values[553].properties.datetime)
+
 	svg.selectAll("circle")
 		   .transition()
 		   .delay(function(d, i) {
-		   		console.log(i / 2* 100)
-			   return i / 2* 100;
+		   		if (i == 0)
+		   			t0 = new Date(eachBird.values[i].properties.datetime);
+		   		ts = new Date(eachBird.values[i].properties.datetime);
+		   		console.log(ts)
+		   		z=eachBird;
+			   return ((ts/60000)-(t0/60000))/3;
 		   })
 		   .duration(500)
 		   .style("fill", "blue")
