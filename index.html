@@ -61,8 +61,10 @@ var path = d3.geo.path()
 
 var graticule = d3.geo.graticule();
 
-var color = d3.scale.ordinal()
-			.range(colorbrewer.RdBu[9]);
+var color = d3.scale.linear()
+			.range(["white","red"]);
+
+			
 
 var svg = d3.select("body")
 			.append("svg")
@@ -120,6 +122,16 @@ d3.json("build/geese.json", function(error, geese) {
 		d3.max(flock, function(d) { return d.properties.name; })
 	]);
 
+	
+	var timedate = d3.time.scale()
+						.range([2000,30000])
+						.domain([
+							d3.min(flock, function(d) {return d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime); }),
+							d3.max(flock, function(d) {return new Date(d.properties.datetime); })
+						]);
+			
+
+
 	// append all data to circle
 	var circle = svg.selectAll("circle")
 		.data(flock)
@@ -131,17 +143,28 @@ d3.json("build/geese.json", function(error, geese) {
 
 	// plot birds by color using name in accessor function
 	svg.selectAll("circle")
+		.transition()
+		.delay(function(d, i) {
+			console.log(timedate(d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime)))
+			return timedate(d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime));
+		})
+		.duration(2000)
 		.attr("r", 10)
 		.style("fill", function(d) { 
 			var value = d.properties.name;
-			console.log(color(value))
+			
 			if (value) {
 				return  color(value)
 			} else {
 				return "#ccc";
 			}
+		})
+		.style("fill-opacity", 0.5)
+		.ease(Math.sqrt)
+		.style("fill-opacity", 1e-6)
+		.remove();
 
-		});
+
 });
 
 
