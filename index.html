@@ -124,7 +124,7 @@ d3.json("build/geese.json", function(error, geese) {
 
 	
 	var timedate = d3.time.scale()
-						.range([2000,30000])
+						.range([1000,30000])
 						.domain([
 							d3.min(flock, function(d) {return d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime); }),
 							d3.max(flock, function(d) {return new Date(d.properties.datetime); })
@@ -145,7 +145,7 @@ d3.json("build/geese.json", function(error, geese) {
 	svg.selectAll("circle")
 		.transition()
 		.delay(function(d, i) {
-			console.log(timedate(d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime)))
+			// console.log(timedate(d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime)))
 			return timedate(d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime));
 		})
 		.duration(2000)
