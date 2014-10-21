@@ -61,8 +61,8 @@ var path = d3.geo.path()
 
 var graticule = d3.geo.graticule();
 
-var color = d3.scale.linear()
-			.range(["white","red"]);
+var color = d3.scale.ordinal()
+			.range(["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"]);
 
 			
 
@@ -159,9 +159,9 @@ d3.json("build/geese.json", function(error, geese) {
 				return "#ccc";
 			}
 		})
-		.style("fill-opacity", 0.5)
+		.style("fill-opacity", 0.9)
 		.ease(Math.sqrt)
-		.style("fill-opacity", 1e-6)
+		.style("stroke-opacity", 1e-6)
 		.remove();
 
 
