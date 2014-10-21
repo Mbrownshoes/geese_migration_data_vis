@@ -61,10 +61,11 @@ var path = d3.geo.path()
 
 var graticule = d3.geo.graticule();
 
-var color = d3.scale.ordinal()
-			.range(["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"]);
+var color = d3.scale.linear()
+			.range(["#ef8a62","#f7f7f7","#67a9cf"]);
 
-			
+var rad = d3.scale.linear()
+			.range([4,10]);
 
 var svg = d3.select("body")
 			.append("svg")
@@ -122,9 +123,14 @@ d3.json("build/geese.json", function(error, geese) {
 		d3.max(flock, function(d) { return d.properties.name; })
 	]);
 
+	rad.domain([
+		d3.min(flock, function(d) { return d.properties.name; }),
+		d3.max(flock, function(d) { return d.properties.name; })
+	]);
+
 	
 	var timedate = d3.time.scale()
-						.range([1000,30000])
+						.range([1000,120000])
 						.domain([
 							d3.min(flock, function(d) {return d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime); }),
 							d3.max(flock, function(d) {return new Date(d.properties.datetime); })
@@ -149,10 +155,11 @@ d3.json("build/geese.json", function(error, geese) {
 			return timedate(d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime));
 		})
 		.duration(2000)
-		.attr("r", 10)
+		.attr("r", function(d) {
+			return rad(d.properties.name);
+		})
 		.style("fill", function(d) { 
 			var value = d.properties.name;
-			
 			if (value) {
 				return  color(value)
 			} else {
