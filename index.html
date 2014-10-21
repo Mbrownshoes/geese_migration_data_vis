@@ -102,78 +102,66 @@ var svg = d3.select("body")
 d3.select(self.frameElement).style("height", height + "px");
 
 var allgeese;
-var feat;
-var loaded_geese=[];
+var flock;
 
 d3.json("build/geese.json", function(error, geese) {
 	if (error) return console.error(error);
 	
-
 	allgeese = topojson.feature(geese, geese.objects.geese)
-	feat = allgeese.features;
-
-	// console.log(d3.keys(feat[0]))
-
-	var geeseName = d3.nest()
-					.key(function(feat) {
-					return feat.properties.name;
-					})
-					.entries(feat);
-	
+	flock = allgeese.features;
 	
 
-	for (var j=0; j< geeseName.length; j++) {
-		eachBird = geeseName[j];
-		loaded_geese.push(eachBird);
-		makeCircles();
-	};
-	
+	var circle = svg.selectAll("circle")
+		.data(flock)
+		.enter()
+		.append("circle")
+		.attr("cx", function(d) { return projection(d.geometry.coordinates)[0]; })
+		.attr("cy", function(d) { return projection(d.geometry.coordinates)[1]; })
+		.attr("r", function(d, i) { return 3; })
+		.attr("fill", "steelblue");
 
-
-// first bird 556
-// second bird 567
-
-
-	// animate each point for each bird
-	svg.selectAll("circle")
-		   .transition()
-		   .delay(function(d, i) {
-		   	console.log(d)
-		   	try {
-		   		if (i == 0)
-		   			startTime = new Date(eachBird.values[i].properties.datetime);
-		   		dateTime = new Date(eachBird.values[i].properties.datetime);
-		   		console.log(i)
-		   		z=eachBird;
-			   return ((dateTime/60000)-(startTime/60000))/4;
-			}catch(e){
-				// console.log(e)
-			}
-		   })
-		   .duration(500)
-		   .style("fill", "blue")
-			.style("fill-opacity", 0.5)
-			.style("stroke", "red")
-			.style("stroke-opacity", 0.5)
-			.attr("r", 20)
-			.ease(Math.sqrt)
-			.style("fill-opacity", 1e-6)
-			.remove()
 });
 
 
 
-function makeCircles() {
-	for (var i=0; i< eachBird.values.length; i++) {
-		var c = eachBird.values[i];
+// function makeCircles() {
+// 	for (var i=0; i< eachBird.values.length; i++) {
+// 		var c = eachBird.values[i];
 			
-			svg.append("circle")
-			.attr("cx", projection(c.geometry.coordinates)[0])
-			.attr("cy", projection(c.geometry.coordinates)[1])
+// 			svg.append("circle")
+// 			.attr("cx", projection(c.geometry.coordinates)[0])
+// 			.attr("cy", projection(c.geometry.coordinates)[1])
 			
-	};
-};
+// 	};
+// };
 
+
+
+	// // animate each point for each bird
+	// svg.selectAll("circle")
+	// 	   .transition()
+	// 	   .delay(function(d, i) {
+	// 	   	console.log(d)
+	// 	   	try {
+	// 	   		if (i == 0)
+	// 	   			startTime = new Date(eachBird.values[i].properties.datetime);
+	// 	   		dateTime = new Date(eachBird.values[i].properties.datetime);
+	// 	   		console.log(i)
+	// 	   		z=eachBird;
+	// 		   return ((dateTime/60000)-(startTime/60000))/4;
+	// 		}catch(e){
+	// 			// console.log(e)
+	// 		}
+	// 	   })
+	// 	   .duration(500)
+	// 	   .style("fill", "blue")
+	// 		.style("fill-opacity", 0.5)
+	// 		.style("stroke", "red")
+	// 		.style("stroke-opacity", 0.5)
+	// 		.attr("r", 20)
+	// 		.ease(Math.sqrt)
+	// 		.style("fill-opacity", 1e-6)
+	// 		.remove()
     </script>
   </body>
 </html>
