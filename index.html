@@ -130,7 +130,7 @@ d3.json("build/geese.json", function(error, geese) {
 
 	
 	var timedate = d3.time.scale()
-						.range([1000,120000])
+						.range([1,120000])
 						.domain([
 							d3.min(flock, function(d) {return d3.time.format("%Y-%m-%d %H:%M:%S.%L").parse(d.properties.datetime); }),
 							d3.max(flock, function(d) {return new Date(d.properties.datetime); })
